@@ -1,0 +1,18 @@
+//converts xml file to json file
+//simply uses xml2js node module
+//formatting to ensure idempotent conversion is done in the other direction
+
+var fs = require('fs'),
+xml2js = require('xml2js');
+
+ 
+var parser = new xml2js.Parser();
+fs.readFile(__dirname + '/06-30_primaries_ok.xml', function(err, data) {
+    parser.parseString(data, function (err, as_js) {
+        console.log('Converted');
+	as_str = JSON.stringify(as_js)
+	fs.writeFile('converted.txt', as_str, function (err) {
+	  if (err) return console.log(err);
+	});
+    });
+});
